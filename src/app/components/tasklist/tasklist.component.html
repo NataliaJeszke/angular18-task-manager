@@ -1,0 +1,19 @@
+<div class="bg-yellow-500 p-4">
+  <h2 class="text-white">Task List</h2>
+  <div>
+    <app-button label="Add Task" type="add"></app-button>
+  </div>
+  <div class="task-list">
+    <ul>
+      <li *ngFor="let task of tasks">
+        <app-task
+          [title]="task.title"
+          [description]="task.description"
+          [date]="task.date"
+          [id]="task.id"
+        >
+        </app-task>
+      </li>
+    </ul>
+  </div>
+</div>
