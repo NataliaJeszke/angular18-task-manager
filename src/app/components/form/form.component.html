@@ -1,44 +1,20 @@
-<!-- <form (ngSubmit)="onSubmit()" #taskForm="ngForm">
+<form (ngSubmit)="onSave()">
   <div>
-    <label for="title">Task Title</label>
+    <label for="taskTitle">Title</label>
+    <input id="taskTitle" [(ngModel)]="title" name="title" required />
+  </div>
+  <div>
+    <label for="taskDescription">Description</label>
     <input
-      type="text"
-      id="title"
-      name="title"
-      [(ngModel)]="task.title"
+      id="taskDescription"
+      [(ngModel)]="description"
+      name="description"
       required
     />
   </div>
   <div>
-    <label for="description">Task Description</label>
-    <textarea
-      id="description"
-      name="description"
-      [(ngModel)]="task.description"
-      required
-    ></textarea>
-  </div>
-  <div>
-    <label for="date">Task Date</label>
-    <input type="date" id="date" name="date" [(ngModel)]="task.date" required />
+    <label for="taskDate">Date</label>
+    <input type="date" id="taskDate" [(ngModel)]="date" name="date" required />
   </div>
   <app-button type="submit" label="Add Task">Add Task</app-button>
-</form> -->
-
-<form (ngSubmit)="onSave()">
-    <div>
-      <label for="taskTitle">Title</label>
-      <input id="taskTitle" [(ngModel)]="title" name="title" required />
-    </div>
-    <div>
-      <label for="taskDescription">Description</label>
-      <input id="taskDescription" [(ngModel)]="description" name="description" required />
-    </div>
-    <div>
-      <label for="taskDate">Date</label>
-      <input type="date" id="taskDate" [(ngModel)]="date" name="date" required />
-    </div>
-    <button type="submit">Save</button>
-    <button type="button" (click)="cancel.emit()">Cancel</button>
-  </form>
-  
+</form>

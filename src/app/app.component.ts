@@ -3,7 +3,7 @@ import { RouterOutlet } from '@angular/router';
 
 import { HeaderComponent } from './components/header/header.component';
 import { TasklistComponent } from './components/tasklist/tasklist.component';
-import { TaskComponent } from './components/ui/task/task.component';
+import { TaskComponent } from './components/tasklist/task/task.component';
 
 @Component({
   selector: 'app-root',

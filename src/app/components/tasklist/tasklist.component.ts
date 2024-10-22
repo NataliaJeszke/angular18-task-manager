@@ -2,12 +2,11 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ButtonComponent } from '../ui/button/button.component';
-import { TaskComponent } from '../ui/task/task.component';
+import { TaskComponent } from './task/task.component';
 import { FormComponent } from '../form/form.component';
 
 import { Task } from '../../models/task.model';
 import { TaskService } from '../../services/task-service.service';
-
 
 @Component({
   selector: 'app-tasklist',

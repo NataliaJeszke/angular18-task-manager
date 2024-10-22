@@ -2,7 +2,7 @@ import { Component, Input, input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TaskService } from '../../../services/task-service.service';
 
-import { ButtonComponent } from '../button/button.component';
+import { ButtonComponent } from '../../ui/button/button.component';
 import { FormComponent } from '../../form/form.component';
 
 @Component({
@@ -18,7 +18,7 @@ export class TaskComponent {
   @Input({ required: false }) description: string = '';
   @Input() date: string = '';
   @Input() id: number = 0;
-  @Input() completed: boolean = false
+  @Input() completed: boolean = false;
 
   // New Angular Signal //
   title = input.required<string>();
