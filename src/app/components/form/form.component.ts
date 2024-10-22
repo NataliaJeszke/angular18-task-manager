@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TaskService } from '../../services/task-service.service';
 import { Task } from '../../models/task.model';
@@ -12,6 +12,8 @@ import { ButtonComponent } from "../ui/button/button.component";
   styleUrl: './form.component.css'
 })
 export class FormComponent {
+  @Output() taskAdded = new EventEmitter<void>();
+  
   task: Task = {
     title: '',
     description: '',
@@ -27,6 +29,8 @@ export class FormComponent {
       this.task.id = Date.now() + Math.floor(Math.random() * 10000);
       this.taskService.addTask(this.task);
       this.task = { title: '', description: '', completed: false, date: '', id: 0 };
+
+      this.taskAdded.emit();
     }
   }  
 }

@@ -37,4 +37,8 @@ export class TasklistComponent {
   toggleForm() {
     this.showForm = !this.showForm;
   }
+
+  refreshTaskList() {
+    this.tasks = this.taskService.getTasks();
+  }
 }
