@@ -13,12 +13,12 @@ import { FormComponent } from '../../form/form.component';
   styleUrl: './task.component.css',
 })
 export class TaskComponent {
-  showForm: boolean = false;
+  showForm = false;
 
-  @Input({ required: false }) description: string = '';
-  @Input() date: string = '';
-  @Input() id: number = 0;
-  @Input() completed: boolean = false;
+  @Input({ required: false }) description = '';
+  @Input() date = '';
+  @Input() id = 0;
+  @Input() completed = false;
 
   // New Angular Signal //
   title = input.required<string>();

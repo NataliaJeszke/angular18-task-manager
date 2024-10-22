@@ -17,7 +17,7 @@ import { TaskService } from '../../services/task-service.service';
 })
 export class TasklistComponent {
   tasks: Task[] = [];
-  showForm: boolean = false;
+  showForm = false;
 
   constructor(private taskService: TaskService) {
     this.tasks = this.taskService.getTasks();

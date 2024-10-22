@@ -12,9 +12,9 @@ import { ButtonComponent } from '../ui/button/button.component';
   styleUrl: './form.component.css',
 })
 export class FormComponent {
-  @Input() title: string = '';
-  @Input() description: string = '';
-  @Input() date: string = '';
+  @Input() title = '';
+  @Input() description = '';
+  @Input() date = '';
 
   @Output() taskAdded = new EventEmitter<void>();
   @Output() save = new EventEmitter<{

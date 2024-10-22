@@ -7,9 +7,9 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./button.component.css'],
 })
 export class ButtonComponent {
-  @Input() label: string = 'Button';
+  @Input() label = 'Button';
   @Input() type: 'submit' | 'delete' | 'complete' | 'edit' = 'submit';
-  @Input() isDisabled: boolean = false;
+  @Input() isDisabled = false;
 
   get buttonClasses(): string {
     if (this.isDisabled && this.type === 'complete') {
