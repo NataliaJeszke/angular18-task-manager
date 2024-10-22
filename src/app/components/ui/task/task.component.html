@@ -5,6 +5,22 @@
   <p>{{ description }}</p>
   <p>Date: {{ date }}</p>
   <app-button label="Delete" type="delete" (click)="onDelete()"></app-button>
-  <app-button [label]="completed ? 'Done' : 'Complete'" type="complete" [isDisabled]="completed" (click)="onComplete()"></app-button>
-  <app-button label="Edit" type="edit"></app-button>
+  <app-button
+    [label]="completed ? 'Done' : 'Complete'"
+    type="complete"
+    [isDisabled]="completed"
+    (click)="onComplete()"
+  ></app-button>
+  <app-button label="Edit" type="edit" (click)="toggleForm()"></app-button>
 </div>
+
+
+<app-form
+  *ngIf="showForm"
+  [title]="title()"
+  [description]="description"
+  [date]="date"
+  (save)="onSave($event)"
+  (cancel)="toggleForm()"
+></app-form>
+
