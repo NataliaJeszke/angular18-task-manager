@@ -1,19 +1,20 @@
-<div
-  class="task-item border p-4 mb-4 bg-white rounded shadow-md flex justify-between items-center"
->
-  <h3>{{ title() }}</h3>
-  <p>{{ description }}</p>
-  <p>Date: {{ date }}</p>
-  <app-button label="Delete" type="delete" (click)="onDelete()"></app-button>
-  <app-button
-    [label]="completed ? 'Done' : 'Complete'"
-    type="complete"
-    [isDisabled]="completed"
-    (click)="onComplete()"
-  ></app-button>
-  <app-button label="Edit" type="edit" (click)="toggleForm()"></app-button>
+<div class="task-item">
+  <div class="task-description">
+    <h3>{{ title() }}</h3>
+    <p>{{ description }}</p>
+    <p>Date: {{ date }}</p>
+  </div>
+  <div class="button-container">
+    <app-button
+      [label]="completed ? 'Done' : 'Complete'"
+      type="complete"
+      [isDisabled]="completed"
+      (click)="onComplete()"
+    ></app-button>
+    <app-button label="Edit" type="edit" (click)="toggleForm()"></app-button>
+    <app-button label="Delete" type="delete" (click)="onDelete()"></app-button>
+  </div>
 </div>
-
 
 <app-form
   *ngIf="showForm"
@@ -23,4 +24,3 @@
   (save)="onSave($event)"
   (cancel)="toggleForm()"
 ></app-form>
-

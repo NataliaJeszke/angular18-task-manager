@@ -1,10 +1,22 @@
 header {
-    background-image: linear-gradient(to right top, #051937, #004f6f, #008b96, #5cc7a7, #ccffaf);
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     height: 30rem;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     gap: 1rem;
-    border-radius: 5px;
+    padding: 2rem;
+    margin: 1rem;
+    color: #ffffff;
+    font-size: 1.5rem;
+}
+
+header h1, header p {
+    text-align: center;
 }
