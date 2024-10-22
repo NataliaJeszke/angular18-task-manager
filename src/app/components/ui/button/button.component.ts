@@ -9,8 +9,13 @@ import { Component, Input } from '@angular/core';
 export class ButtonComponent {
   @Input() label: string = 'Button';
   @Input() type: 'submit' | 'delete' | 'complete' | 'edit' = 'submit';
+  @Input() isDisabled: boolean = false;
 
   get buttonClasses(): string {
+    if (this.isDisabled && this.type === 'complete') {
+      return 'bg-gray-500 text-white font-bold py-2 px-4 rounded cursor-not-allowed';
+    }
+
     switch (this.type) {
       case 'submit':
         return 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded';

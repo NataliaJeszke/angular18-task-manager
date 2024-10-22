@@ -15,6 +15,7 @@ export class TaskComponent {
   @Input({ required: false }) description: string = '';
   @Input() date: string = '';
   @Input() id: number = 0;
+  @Input() completed: boolean = false
 
   // New Angular Signal //
   title = input.required<string>();
@@ -26,6 +27,11 @@ export class TaskComponent {
   onDelete() {
     this.taskService.removeTask(this.id);
     this.taskDeleted.emit();
+  }
+
+  onComplete() {
+    this.taskService.completeTask(this.id);
+    this.completed = true;
   }
 
 }

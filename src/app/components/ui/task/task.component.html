@@ -5,6 +5,6 @@
   <p>{{ description }}</p>
   <p>Date: {{ date }}</p>
   <app-button label="Delete" type="delete" (click)="onDelete()"></app-button>
-  <app-button label="Complete" type="complete"></app-button>
+  <app-button [label]="completed ? 'Done' : 'Complete'" type="complete" [isDisabled]="completed" (click)="onComplete()"></app-button>
   <app-button label="Edit" type="edit"></app-button>
 </div>
