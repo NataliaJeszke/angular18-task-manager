@@ -1,5 +1,4 @@
 <div class="bg-yellow-500 p-4">
-  <h2 class="text-white">Task List</h2>
   <div>
     <app-button
       label="Add Task"
@@ -31,6 +30,7 @@
           [description]="task.description"
           [date]="task.date"
           [id]="task.id"
+          (taskDeleted)="refreshTaskList()"
         ></app-task>
       </li>
     </ul>

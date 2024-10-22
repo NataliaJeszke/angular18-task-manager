@@ -1,4 +1,7 @@
-import { Component, Input, input } from '@angular/core';
+import { Component, Input, input, Output, EventEmitter } from '@angular/core';
+
+import { TaskService } from '../../../services/task-service.service';
+
 import { ButtonComponent } from '../button/button.component';
 
 @Component({
@@ -15,4 +18,14 @@ export class TaskComponent {
 
   // New Angular Signal //
   title = input.required<string>();
+
+  @Output() taskDeleted = new EventEmitter<void>();
+
+  constructor(private taskService: TaskService) {}
+
+  onDelete() {
+    this.taskService.removeTask(this.id);
+    this.taskDeleted.emit();
+  }
+
 }

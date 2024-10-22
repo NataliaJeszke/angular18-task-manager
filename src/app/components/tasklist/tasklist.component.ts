@@ -41,4 +41,8 @@ export class TasklistComponent {
   refreshTaskList() {
     this.tasks = this.taskService.getTasks();
   }
+
+  onTaskDeleted() {
+    this.refreshTaskList();
+  }
 }

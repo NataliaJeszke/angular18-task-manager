@@ -1,22 +1,10 @@
-<!-- <div class="task-item border p-4 mb-4 bg-white rounded shadow-md flex justify-between items-center">
-    <div class="task-details">
-      <h3 class="text-xl font-semibold text-gray-800">{{ title }}</h3>
-      <p class="text-gray-600">{{ description }}</p>
-      <p class="text-sm text-gray-500">Due date: {{ date }}</p>
-    </div>
-    
-    <div class="task-actions flex space-x-2">
-      <app-button label="Complete" type="complete"></app-button>
-      <app-button label="Delete" type="delete"></app-button>
-    </div>
-  </div> -->
 <div
   class="task-item border p-4 mb-4 bg-white rounded shadow-md flex justify-between items-center"
 >
   <h3>{{ title() }}</h3>
   <p>{{ description }}</p>
   <p>Date: {{ date }}</p>
-  <app-button label="Delete" type="delete"></app-button>
+  <app-button label="Delete" type="delete" (click)="onDelete()"></app-button>
   <app-button label="Complete" type="complete"></app-button>
   <app-button label="Edit" type="edit"></app-button>
 </div>
