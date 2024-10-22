@@ -8,11 +8,11 @@ import { Component, Input } from '@angular/core';
 })
 export class ButtonComponent {
   @Input() label: string = 'Button';
-  @Input() type: 'add' | 'delete' | 'complete' | 'edit' = 'add';
+  @Input() type: 'submit' | 'delete' | 'complete' | 'edit' = 'submit';
 
   get buttonClasses(): string {
     switch (this.type) {
-      case 'add':
+      case 'submit':
         return 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded';
       case 'delete':
         return 'bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded';

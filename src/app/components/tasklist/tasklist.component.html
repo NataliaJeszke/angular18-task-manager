@@ -1,9 +1,29 @@
 <div class="bg-yellow-500 p-4">
   <h2 class="text-white">Task List</h2>
   <div>
-    <app-button label="Add Task" type="add"></app-button>
+    <app-button
+      label="Add Task"
+      type="submit"
+      (click)="toggleForm()"
+    ></app-button>
   </div>
-  <div class="task-list">
+  <div
+    *ngIf="showForm"
+    class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+  >
+    <div class="bg-white p-6 rounded-lg shadow-lg">
+      <h3 class="text-lg font-bold mb-4">Add New Task</h3>
+      <app-form></app-form>
+      <button
+        (click)="toggleForm()"
+        class="mt-4 bg-gray-500 text-white px-4 py-2 rounded"
+      >
+        Close
+      </button>
+    </div>
+  </div>
+
+  <div class="task-list mt-4">
     <ul>
       <li *ngFor="let task of tasks">
         <app-task
@@ -11,8 +31,7 @@
           [description]="task.description"
           [date]="task.date"
           [id]="task.id"
-        >
-        </app-task>
+        ></app-task>
       </li>
     </ul>
   </div>
