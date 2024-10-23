@@ -24,6 +24,7 @@ export class TaskComponent {
   title = input.required<string>();
 
   @Output() taskDeleted = new EventEmitter<void>();
+  cdr: any;
 
   constructor(private taskService: TaskService) {}
 
@@ -48,5 +49,6 @@ export class TaskComponent {
       completed: this.completed,
     });
     this.toggleForm();
+    this.cdr.detectChanges();  // Force Angular to detect the changes
   }
 }
