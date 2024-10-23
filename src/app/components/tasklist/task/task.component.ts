@@ -24,7 +24,6 @@ export class TaskComponent {
   title = input.required<string>();
 
   @Output() taskDeleted = new EventEmitter<void>();
-  cdr: any;
 
   constructor(private taskService: TaskService) {}
 
