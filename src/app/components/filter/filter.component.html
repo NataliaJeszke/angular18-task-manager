@@ -3,16 +3,14 @@
     
     <div class="filter-item">
       <label for="dateFilter">Filtruj po dacie:</label>
-      <input type="date" id="dateFilter" />
+      <input type="date" id="dateFilter" (change)="onDateChange($event)" />
     </div>
     
     <div class="filter-item">
       <label for="completedFilter">Zadania ukończone:</label>
       <select id="completedFilter">
-        <option>Wszystkie</option>
-        <option>Ukończone</option>
-        <option>Nieukończone</option>
+        <option *ngFor="let filter of filters">{{ filter }}</option>
       </select>
     </div>
-  </div>
+</div>
   

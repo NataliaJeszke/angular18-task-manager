@@ -7,6 +7,7 @@ import { FormComponent } from '../form/form.component';
 
 import { Task } from '../../models/task.model';
 import { TaskService } from '../../services/task-service.service';
+import { FiltersService } from '../../services/filters-service.service';
 
 @Component({
   selector: 'app-tasklist',
@@ -38,10 +39,18 @@ export class TasklistComponent {
   }
 
   refreshTaskList() {
-    this.tasks = this.taskService.getTasks();
+    this.tasks = [...this.taskService.getTasks()];
   }
-
+  
   onTaskDeleted() {
     this.refreshTaskList();
   }
+
+  onTaskAdded(){
+    this.refreshTaskList();
+    this.toggleForm();
+  }
+
+  // Filtering tasks //
+
 }

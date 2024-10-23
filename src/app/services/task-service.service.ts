@@ -55,4 +55,18 @@ export class TaskService {
       task.completed = true;
     }
   }
+
+  // Filtering tasks //
+
+  getTasksByDate(date: string): Task[] {
+    return this.tasks.filter((task) => task.date === date);
+  }
+
+  getCompletedTasks(): Task[] {
+    return this.tasks.filter((task) => task.completed);
+  }
+
+  getPendingTasks(): Task[] {
+    return this.tasks.filter((task) => !task.completed);
+  }
 }
