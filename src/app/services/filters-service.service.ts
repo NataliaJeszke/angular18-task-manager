@@ -16,7 +16,6 @@ export class FiltersService {
 
   setDateFilter(date: string): void {
     this.selectedDate.next(date);
-    console.log('Selected Date:', this.selectedDate.getValue());
   }
 
   getDateFilter(): Observable<string | null> {

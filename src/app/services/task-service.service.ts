@@ -36,7 +36,6 @@ export class TaskService {
 
   addTask(task: Task) {
     this.tasks.push(task);
-    console.log('Task Added serwis:', task);
   }
 
   removeTask(id: number) {
@@ -44,8 +43,6 @@ export class TaskService {
   }
 
   editTask(updatedTask: Task) {
-    console.log('Task Edited serwis:', updatedTask);
-    console.log('task edited service', this.tasks);
     const index = this.tasks.findIndex((task) => task.id === updatedTask.id);
     if (index !== -1) {
       this.tasks[index] = updatedTask;

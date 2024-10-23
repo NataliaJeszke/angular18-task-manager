@@ -42,9 +42,6 @@ export class TaskComponent {
   }
 
   onSave(updatedTask: { title: string; description: string; date: string }) {
-    console.log('on save po emit');
-    console.log('task id: ', this.id);
-    console.log('task title', updatedTask.title);
     this.taskService.editTask({
       id: this.id,
       ...updatedTask,
