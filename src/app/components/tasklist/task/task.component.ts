@@ -49,6 +49,5 @@ export class TaskComponent {
       completed: this.completed,
     });
     this.toggleForm();
-    this.cdr.detectChanges();  // Force Angular to detect the changes
   }
 }
