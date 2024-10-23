@@ -17,11 +17,6 @@ export class FormComponent {
   @Input() date = '';
 
   @Output() taskAdded = new EventEmitter<void>();
-  @Output() save = new EventEmitter<{
-    title: string;
-    description: string;
-    date: string;
-  }>();
   @Output() cancel = new EventEmitter<void>();
 
   task: Task = {
@@ -34,9 +29,21 @@ export class FormComponent {
 
   constructor(private taskService: TaskService) {}
 
+  formatDate(date: string): string {
+    const parts = date.split('-');
+    if (parts.length !== 3) return date;
+
+    const year = parts[0];
+    const month = parts[1];
+    const day = parts[2];
+
+    return `${day}-${month}-${year}`;
+  }
+
   onSubmit() {
     if (this.task.title) {
       this.task.id = Date.now() + Math.floor(Math.random() * 10000);
+      this.task.date = this.formatDate(this.task.date);
       this.taskService.addTask(this.task);
       this.task = {
         title: '',
@@ -47,14 +54,7 @@ export class FormComponent {
       };
 
       this.taskAdded.emit();
+      console.log('Task Added:', this.task);
     }
-  }
-
-  onSave() {
-    this.save.emit({
-      title: this.title,
-      description: this.description,
-      date: this.date,
-    });
   }
 }

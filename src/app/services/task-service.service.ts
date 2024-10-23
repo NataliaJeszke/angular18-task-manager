@@ -36,6 +36,7 @@ export class TaskService {
 
   addTask(task: Task) {
     this.tasks.push(task);
+    console.log('Task Added serwis:', task);
   }
 
   removeTask(id: number) {
