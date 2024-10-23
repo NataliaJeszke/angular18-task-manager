@@ -1,9 +1,16 @@
-import { Component, Output, EventEmitter, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Output,
+  EventEmitter,
+  Input,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { formatDate } from '@angular/common';
-import { TaskService } from '../../services/task-service.service';
-import { Task } from '../../models/task.model';
-import { ButtonComponent } from '../ui/button/button.component';
+import { TaskService } from '../../../services/task-service.service';
+import { Task } from '../../../models/task.model';
+import { ButtonComponent } from '../button/button.component';
 
 @Component({
   selector: 'app-form',
@@ -56,7 +63,7 @@ export class FormComponent implements OnChanges {
   }
 
   onSave() {
-    console.log("on save start")
+    console.log('on save start');
     this.save.emit({
       title: this.task.title,
       description: this.task.description,

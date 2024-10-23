@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { TaskService } from '../../../services/task-service.service';
 
 import { ButtonComponent } from '../../ui/button/button.component';
-import { FormComponent } from '../../form/form.component';
+import { FormComponent } from '../../ui/form/form.component';
 
 @Component({
   selector: 'app-task',
@@ -43,8 +43,8 @@ export class TaskComponent {
 
   onSave(updatedTask: { title: string; description: string; date: string }) {
     console.log('on save po emit');
-    console.log("task id: ", this.id)
-    console.log("task title", updatedTask.title)
+    console.log('task id: ', this.id);
+    console.log('task title', updatedTask.title);
     this.taskService.editTask({
       id: this.id,
       ...updatedTask,
