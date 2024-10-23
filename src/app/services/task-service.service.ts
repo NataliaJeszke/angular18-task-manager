@@ -44,6 +44,8 @@ export class TaskService {
   }
 
   editTask(updatedTask: Task) {
+    console.log('Task Edited serwis:', updatedTask);
+    console.log('task edited service', this.tasks);
     const index = this.tasks.findIndex((task) => task.id === updatedTask.id);
     if (index !== -1) {
       this.tasks[index] = updatedTask;

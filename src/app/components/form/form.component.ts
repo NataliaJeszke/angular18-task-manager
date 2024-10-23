@@ -16,6 +16,7 @@ export class FormComponent implements OnChanges {
   @Input() title = '';
   @Input() description = '';
   @Input() date = '';
+  @Input() newTask = false;
 
   @Output() taskAdded = new EventEmitter<void>();
   @Output() save = new EventEmitter<{
@@ -50,10 +51,12 @@ export class FormComponent implements OnChanges {
       this.taskService.addTask(this.task);
       this.resetTask();
       this.taskAdded.emit();
+      this.newTask = false;
     }
   }
 
   onSave() {
+    console.log("on save start")
     this.save.emit({
       title: this.task.title,
       description: this.task.description,

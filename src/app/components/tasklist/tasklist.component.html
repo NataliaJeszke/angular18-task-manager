@@ -10,7 +10,7 @@
   <div *ngIf="showForm" class="modal-overlay">
     <div class="modal-content">
       <h3>Add New Task</h3>
-      <app-form (taskAdded)="onTaskAdded()"></app-form>
+      <app-form [newTask]="addingNewTask" (taskAdded)="onTaskAdded()"></app-form>
       <button class="close-button" (click)="toggleForm()">Close</button>
     </div>
   </div>
