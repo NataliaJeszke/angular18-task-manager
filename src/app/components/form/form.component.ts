@@ -1,5 +1,6 @@
-import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { Component, Output, EventEmitter, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { formatDate } from '@angular/common';
 import { TaskService } from '../../services/task-service.service';
 import { Task } from '../../models/task.model';
 import { ButtonComponent } from '../ui/button/button.component';
@@ -9,12 +10,13 @@ import { ButtonComponent } from '../ui/button/button.component';
   standalone: true,
   imports: [FormsModule, ButtonComponent],
   templateUrl: './form.component.html',
-  styleUrl: './form.component.css',
+  styleUrls: ['./form.component.css'],
 })
-export class FormComponent {
+export class FormComponent implements OnChanges {
   @Input() title = '';
   @Input() description = '';
   @Input() date = '';
+  @Input() newTask = false;
 
   @Output() taskAdded = new EventEmitter<void>();
   @Output() save = new EventEmitter<{
@@ -34,27 +36,41 @@ export class FormComponent {
 
   constructor(private taskService: TaskService) {}
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['title'] || changes['description'] || changes['date']) {
+      this.task.title = this.title;
+      this.task.description = this.description;
+      this.task.date = this.date;
+    }
+  }
+
   onSubmit() {
     if (this.task.title) {
       this.task.id = Date.now() + Math.floor(Math.random() * 10000);
+      this.task.date = formatDate(this.task.date, 'dd-MM-yyyy', 'en-US');
       this.taskService.addTask(this.task);
-      this.task = {
-        title: '',
-        description: '',
-        completed: false,
-        date: '',
-        id: 0,
-      };
-
+      this.resetTask();
       this.taskAdded.emit();
+      this.newTask = false;
     }
   }
 
   onSave() {
+    console.log("on save start")
     this.save.emit({
-      title: this.title,
-      description: this.description,
-      date: this.date,
+      title: this.task.title,
+      description: this.task.description,
+      date: formatDate(this.task.date, 'dd-MM-yyyy', 'en-US'),
     });
+  }
+
+  resetTask() {
+    this.task = {
+      title: '',
+      description: '',
+      completed: false,
+      date: '',
+      id: 0,
+    };
   }
 }

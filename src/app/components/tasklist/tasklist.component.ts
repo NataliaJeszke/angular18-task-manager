@@ -19,29 +19,22 @@ import { FiltersService } from '../../services/filters-service.service';
 export class TasklistComponent {
   tasks: Task[] = [];
   showForm = false;
+  addingNewTask = false;
 
   constructor(private taskService: TaskService) {
     this.tasks = this.taskService.getTasks();
   }
 
-  removeTask(id: number) {
-    this.taskService.removeTask(id);
-    this.tasks = this.taskService.getTasks();
-  }
-
-  completeTask(id: number) {
-    this.taskService.completeTask(id);
-    this.tasks = this.taskService.getTasks();
-  }
 
   toggleForm() {
     this.showForm = !this.showForm;
+    this.addingNewTask = !this.addingNewTask;
   }
 
   refreshTaskList() {
-    this.tasks = [...this.taskService.getTasks()];
+    this.tasks = this.taskService.getTasks();
   }
-  
+
   onTaskDeleted() {
     this.refreshTaskList();
   }

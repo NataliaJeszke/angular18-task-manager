@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 
 import { FiltersService } from '../../services/filters-service.service';
 
@@ -20,7 +20,7 @@ export class FilterComponent {
   onDateChange(event: Event): void {
     const target = event.target as HTMLInputElement;
     if (target) {
-      const selectedDate = new Date(target.value);
+      const selectedDate: string = formatDate(target.value, 'dd-MM-yyyy', 'en-US');
       this.filtersService.setDateFilter(selectedDate);
     }
   }
