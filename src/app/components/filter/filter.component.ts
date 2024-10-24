@@ -22,7 +22,7 @@ export class FilterComponent {
     const target = event.target as HTMLInputElement;
     if (target) {
       const isChecked = target.checked;
-      this.filtersService.getCheckboxChange(isChecked);
+      this.filtersService.setCheckboxChange(isChecked);
     }
   }
 
@@ -39,7 +39,7 @@ export class FilterComponent {
     if (target) {
       const selectedStatus: string = target.value;
       console.log(selectedStatus);
-      this.filtersService.getStatusChange(selectedStatus);
+      this.filtersService.setStatusChange(selectedStatus);
     }
   }
 }

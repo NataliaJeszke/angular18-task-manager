@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable, Subject } from "rxjs";
-import { distinctUntilChanged } from 'rxjs/operators';
+import { Subject } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -8,11 +7,12 @@ import { distinctUntilChanged } from 'rxjs/operators';
 
 export class FiltersService {
   private filters: string[] = ['All', 'Completed', 'Pending'];
-  private selectedDate = new BehaviorSubject<string | null>(null);
-  private checkboxStateChange: Subject<boolean> = new Subject<boolean>();
+  private selectedDate = new Subject<string>();
+  private checkboxStateChange = new Subject<boolean>();
   private statusChange = new Subject<string>();
   
   checkboxStateChange$ = this.checkboxStateChange.asObservable();
+  selectedDate$ = this.selectedDate.asObservable();
   statusChange$ = this.statusChange.asObservable();
 
 
@@ -20,27 +20,20 @@ export class FiltersService {
     return this.filters;
   }
 
-  getCheckboxChange(isChecked: boolean) {
-    this.checkboxStateChange.next(isChecked);
-  }
-
-  
-  getDateFilter(): Observable<string | null> {
-    return this.selectedDate.asObservable().pipe(
-      distinctUntilChanged()
-    );
-  }
-  
-  setDateFilter(date: string): void {
-    this.selectedDate.next(date);
-  }
-
   getTodayDate(): string {
     const today = new Date();
     return String(today)
   }
 
-  getStatusChange(status: string): void {
+  setCheckboxChange(isChecked: boolean) {
+    this.checkboxStateChange.next(isChecked);
+  }
+
+  setDateFilter(date: string): void {
+    this.selectedDate.next(date);
+  }
+
+  setStatusChange(status: string): void {
     this.statusChange.next(status);
   }
 }

@@ -56,8 +56,8 @@ export class TasklistComponent implements OnInit, OnDestroy {
         this.refreshTaskList();
       }
     });
-    
-    this.dateFilterSubscription = this.filtersService.getDateFilter().subscribe((selectedDate: string | null) => {
+
+    this.dateFilterSubscription = this.filtersService.selectedDate$.subscribe((selectedDate: string | null) => {
       console.log(selectedDate)
       if (selectedDate) {
         this.tasks = this.taskService.getTasksByDate(selectedDate);
