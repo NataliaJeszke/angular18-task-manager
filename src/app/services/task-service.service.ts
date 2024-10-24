@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Task } from '../models/task.model';
+import { formatDate } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -59,7 +60,8 @@ export class TaskService {
   // Filtering tasks //
 
   getTasksByDate(date: string): Task[] {
-    return this.tasks.filter((task) => task.date === date);
+    const formattedDate = formatDate(date, 'dd-MM-yyyy', 'en-US');
+    return this.tasks.filter((task) => task.date === formattedDate);
   }
 
   getCompletedTasks(): Task[] {
