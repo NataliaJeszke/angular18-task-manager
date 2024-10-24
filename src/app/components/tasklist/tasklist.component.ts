@@ -8,6 +8,7 @@ import { FormComponent } from '../ui/form/form.component';
 import { Task } from '../../models/task.model';
 import { TaskService } from '../../services/task-service.service';
 import { FiltersService } from '../../services/filters-service.service';
+import { SearchService } from '../../services/search-service.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -24,11 +25,16 @@ export class TasklistComponent implements OnInit, OnDestroy {
   private checkboxStateSubscription: Subscription | undefined;
   private dateFilterSubscription: Subscription | undefined;
   private statusFilterSubscription: Subscription | undefined;
+  private searchQuerySubscription: Subscription | undefined;
 
-  constructor(private taskService: TaskService, private filtersService: FiltersService) {
+  constructor(
+    private taskService: TaskService,
+    private filtersService: FiltersService,
+    private searchService: SearchService
+  ) {
     this.tasks = this.taskService.getTasks();
   }
-  
+
   toggleForm() {
     this.showForm = !this.showForm;
     this.addingNewTask = !this.addingNewTask;
@@ -49,33 +55,48 @@ export class TasklistComponent implements OnInit, OnDestroy {
 
   // Filtering tasks //
   ngOnInit() {
-    this.checkboxStateSubscription = this.filtersService.checkboxStateChange$.subscribe((isChecked: boolean) => {
-      if (isChecked) {
-        const today = this.filtersService.getTodayDate();
-        this.tasks = this.taskService.getTasksByDate(today);
-        this.refreshTaskList();
-      }
-    });
+    this.checkboxStateSubscription =
+      this.filtersService.checkboxStateChange$.subscribe(
+        (isChecked: boolean) => {
+          if (isChecked) {
+            const today = this.filtersService.getTodayDate();
+            this.tasks = this.taskService.getTasksByDate(today);
+            this.refreshTaskList();
+          }
+        }
+      );
 
-    this.dateFilterSubscription = this.filtersService.selectedDate$.subscribe((selectedDate: string | null) => {
-      console.log(selectedDate)
-      if (selectedDate) {
-        this.tasks = this.taskService.getTasksByDate(selectedDate);
-      } else {
-        this.refreshTaskList();
+    this.dateFilterSubscription = this.filtersService.selectedDate$.subscribe(
+      (selectedDate: string | null) => {
+        if (selectedDate) {
+          this.tasks = this.taskService.getTasksByDate(selectedDate);
+        } else {
+          this.refreshTaskList();
+        }
       }
-    });
+    );
 
-    this.statusFilterSubscription = this.filtersService.statusChange$.subscribe((selectedStatus: string) => {
-      console.log(selectedStatus);
-      if (selectedStatus === 'Completed') {
-        this.tasks = this.taskService.getCompletedTasks();
-      } else if (selectedStatus === 'Pending') {
-        this.tasks = this.taskService.getPendingTasks();
-      } else {
-        this.refreshTaskList();
+    this.statusFilterSubscription = this.filtersService.statusChange$.subscribe(
+      (selectedStatus: string) => {
+        if (selectedStatus === 'Completed') {
+          this.tasks = this.taskService.getCompletedTasks();
+        } else if (selectedStatus === 'Pending') {
+          this.tasks = this.taskService.getPendingTasks();
+        } else {
+          this.refreshTaskList();
+        }
       }
-    });
+    );
+
+    this.searchQuerySubscription = this.searchService.searchQuery$.subscribe(
+      (query: string) => {
+        if (query) {
+          this.tasks = this.taskService.getTasksBySearchQuery(query);
+        } else {
+          this.refreshTaskList();
+        }
+      }
+    );
   }
 
   ngOnDestroy() {
