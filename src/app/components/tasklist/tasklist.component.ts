@@ -56,12 +56,16 @@ export class TasklistComponent implements OnInit, OnDestroy {
         this.refreshTaskList();
       }
     });
+    
     this.dateFilterSubscription = this.filtersService.getDateFilter().subscribe((selectedDate: string | null) => {
       console.log(selectedDate)
       if (selectedDate) {
         this.tasks = this.taskService.getTasksByDate(selectedDate);
+      } else {
+        this.refreshTaskList();
       }
     });
+
     this.statusFilterSubscription = this.filtersService.statusChange$.subscribe((selectedStatus: string) => {
       console.log(selectedStatus);
       if (selectedStatus === 'Completed') {
