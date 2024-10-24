@@ -6,11 +6,12 @@ import { TasklistComponent } from './components/tasklist/tasklist.component';
 import { TaskComponent } from './components/tasklist/task/task.component';
 import { FilterComponent } from "./components/filter/filter.component";
 import { SearchComponent } from "./components/search/search.component";
+import { MenuComponent } from "./components/menu/menu.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, TasklistComponent, TaskComponent, FilterComponent, SearchComponent],
+  imports: [RouterOutlet, HeaderComponent, TasklistComponent, TaskComponent, FilterComponent, SearchComponent, MenuComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })

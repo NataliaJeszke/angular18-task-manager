@@ -1,16 +1,18 @@
 <div class="filter-container">
-    <h2>Filtruj zadania</h2>
-    
-    <div class="filter-item">
-      <label for="dateFilter">Filtruj po dacie:</label>
-      <input type="date" id="dateFilter" (change)="onDateChange($event)" />
-    </div>
-    
-    <div class="filter-item">
-      <label for="completedFilter">Zadania ukończone:</label>
-      <select id="completedFilter">
-        <option *ngFor="let filter of filters">{{ filter }}</option>
-      </select>
-    </div>
+  <div class="filter-item today">
+    <label for="todayFilter">Due date today</label>
+    <input class="checkbox" type="checkbox" id="todayFilter" (change)="onCheckboxChange($event)" />
+  </div>
+
+  <div class="filter-item">
+    <label for="dateFilter">Due date</label>
+    <input type="date" id="dateFilter" (change)="onDateChange($event)" />
+  </div>
+
+  <div class="filter-item">
+    <label for="statusFilter">Status</label>
+    <select (change)="onStatusChange($event)" id="statusFilter">
+      <option *ngFor="let filter of filters">{{ filter }}</option>
+    </select>
+  </div>
 </div>
-  

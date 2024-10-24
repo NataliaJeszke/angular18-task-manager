@@ -63,7 +63,6 @@ export class FormComponent implements OnChanges {
   }
 
   onSave() {
-    console.log('on save start');
     this.save.emit({
       title: this.task.title,
       description: this.task.description,

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Task } from '../models/task.model';
+import { formatDate } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -36,7 +37,6 @@ export class TaskService {
 
   addTask(task: Task) {
     this.tasks.push(task);
-    console.log('Task Added serwis:', task);
   }
 
   removeTask(id: number) {
@@ -44,8 +44,6 @@ export class TaskService {
   }
 
   editTask(updatedTask: Task) {
-    console.log('Task Edited serwis:', updatedTask);
-    console.log('task edited service', this.tasks);
     const index = this.tasks.findIndex((task) => task.id === updatedTask.id);
     if (index !== -1) {
       this.tasks[index] = updatedTask;
@@ -62,7 +60,8 @@ export class TaskService {
   // Filtering tasks //
 
   getTasksByDate(date: string): Task[] {
-    return this.tasks.filter((task) => task.date === date);
+    const formattedDate = formatDate(date, 'dd-MM-yyyy', 'en-US');
+    return this.tasks.filter((task) => task.date === formattedDate);
   }
 
   getCompletedTasks(): Task[] {
