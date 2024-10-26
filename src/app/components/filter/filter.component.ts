@@ -58,7 +58,7 @@ export class FilterComponent {
   onClearFilters(): void {
     this.isChecked = false;
     this.selectedDate = '';
-    this.selectedStatus = '';
+    this.selectedStatus = 'All';
 
     this.filtersService.setCheckboxChange(false);
     this.filtersService.setDateFilter("");
