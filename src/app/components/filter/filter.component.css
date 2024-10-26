@@ -10,6 +10,7 @@
   
   .filter-item {
     margin-bottom: 1.5rem;
+    margin-top: 1.5rem;
   }
 
   .today {
@@ -45,4 +46,22 @@
     border-color: #007bff;
     outline: none;
   }
+
+  .filter-header {
+    display: flex;
+    justify-content: flex-start;
+    padding: 0.5rem;
+    gap: 10px;
+    border-bottom: #e2e8f0 1px solid;
+    
+    .material-symbols-outlined{
+        width: 30px;
+        height: 30px;
+        margin-left: -10px;
+    }
+    .clear-button {
+        margin-bottom: 5px;
+        margin-left: 20px;
+    }
+}
   
