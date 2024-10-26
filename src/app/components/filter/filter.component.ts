@@ -15,7 +15,7 @@ export class FilterComponent {
   filters: string[] = [];
   isChecked = false;
   selectedDate = '';
-  selectedStatus = '';
+  selectedStatus = 'All';
 
   constructor(private filtersService: FiltersService) {
     this.filters = this.filtersService.getFilters();
