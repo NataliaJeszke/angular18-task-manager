@@ -13,14 +13,13 @@ export class SearchComponent {
 
   constructor(private searchService: SearchService) {}
 
-  onInput(event: Event) {
+  onInput(event: Event): void {
     const target = event.target as HTMLInputElement;
     if (target) {
-      const query: string = target.value;
-      this.searchQuery = query;
-    }
-    if (!this.searchQuery) {
-      this.searchService.setSearchQuery('');
+      this.searchQuery = target.value;
+      if (this.searchQuery === '') {
+        this.searchService.setSearchQuery('');
+      }
     }
   }
 

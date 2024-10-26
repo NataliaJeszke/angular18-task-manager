@@ -22,7 +22,9 @@
           [description]="task.description"
           [date]="task.date"
           [id]="task.id"
+          [completed]="task.completed"
           (taskDeleted)="onTaskDeleted()"
+          (taskCompleted)="onTaskCompleted()"
         ></app-task>
       </li>
     </ul>
