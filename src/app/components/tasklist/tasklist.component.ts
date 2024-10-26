@@ -9,7 +9,6 @@ import { TaskComponent } from './task/task.component';
 import { Task } from '../../models/task.model';
 
 import { TaskService } from '../../services/task-service.service';
-import { SearchService } from '../../services/search-service.service';
 
 @Component({
   selector: 'app-tasklist',
@@ -25,7 +24,7 @@ export class TasklistComponent implements OnInit, OnDestroy {
   searchQuery = '';
   private subscription: Subscription | undefined;
 
-  constructor(private taskService: TaskService, private searchService: SearchService) {}
+  constructor(private taskService: TaskService) {}
 
   toggleForm() {
     this.showForm = !this.showForm;

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { FiltersService } from '../../services/filters-service.service';
-import { TaskService } from '../../services/task-service.service';
 
 @Component({
   selector: 'app-filter',
@@ -14,7 +13,7 @@ import { TaskService } from '../../services/task-service.service';
 export class FilterComponent {
   filters: string[] = [];
 
-  constructor(private filtersService: FiltersService, private taskService: TaskService) {
+  constructor(private filtersService: FiltersService) {
     this.filters = this.filtersService.getFilters();
   }
 

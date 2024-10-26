@@ -17,7 +17,9 @@ export class SearchComponent {
     const target = event.target as HTMLInputElement;
     if (target) {
       this.searchQuery = target.value;
-      console.log(this.searchQuery);
+      if (this.searchQuery === '') {
+        this.searchService.setSearchQuery('');
+      }
     }
   }
 
