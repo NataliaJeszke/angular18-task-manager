@@ -20,15 +20,13 @@ export class TaskService {
     this.filteredTasks$ = combineLatest([
       this.tasks$,
       this.filtersService.selectedDate$,
-      this.filtersService.checkboxStateChange$,
       this.filtersService.statusChange$,
       this.searchService.searchQuery$
     ]).pipe(
-      map(([tasks, selectedDate, checkboxState, status, searchQuery]) => {
+      map(([tasks, selectedDate, status, searchQuery]) => {
         return tasks.filter((task) => {
           let matchesDate = true;
           let matchesStatus = true;
-          let matchesCompletion = true;
           let matchesSearch = true;
     
           if (selectedDate) {
@@ -40,10 +38,6 @@ export class TaskService {
             matchesStatus = (status === 'Completed' && task.completed) ||
                             (status === 'Pending' && !task.completed);
           }
-    
-          if (checkboxState) {
-            matchesCompletion = task.completed === checkboxState;
-          }
 
           if (searchQuery) {
             const lowerQuery = searchQuery.toLowerCase();
@@ -51,7 +45,7 @@ export class TaskService {
                             task.description.toLowerCase().includes(lowerQuery);
           }
     
-          return matchesDate && matchesStatus && matchesCompletion && matchesSearch;
+          return matchesDate && matchesStatus && matchesSearch;
         });
       })
     );

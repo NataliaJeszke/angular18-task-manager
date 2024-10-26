@@ -22,6 +22,11 @@ export class FilterComponent {
     if (target) {
       const isChecked = target.checked;
       this.filtersService.setCheckboxChange(isChecked);
+      this.filtersService.setDateFilter(this.filtersService.getTodayDate());
+
+      if (!isChecked) {
+        this.filtersService.setDateFilter("");
+      }
     }
   }
 
