@@ -1,84 +1,128 @@
 import { Injectable } from '@angular/core';
 import { Task } from '../models/task.model';
 import { formatDate } from '@angular/common';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { FiltersService } from './filters-service.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TaskService {
-  private tasks: Task[] = [
-    {
-      id: 1,
-      title: 'Finish Angular Project',
-      description: 'Complete the task manager project.',
-      date: '25-10-2024',
-      completed: false,
-    },
-    {
-      id: 2,
-      title: 'Review PRs',
-      description:
-        'Go through the pull requests for the latest features in the repository.',
-      date: '22-10-2024',
-      completed: false,
-    },
-    {
-      id: 3,
-      title: 'Prepare for Meeting',
-      description: 'Organize notes and slides for the upcoming client meeting.',
-      date: '23-10-2024',
-      completed: false,
-    },
-  ];
+  private tasksSubject = new BehaviorSubject<Task[]>(this.loadTasksFromLocalStorage());
+  tasks$ = this.tasksSubject.asObservable();
+  filteredTasks$: Observable<Task[]>;
 
-  getTasks(): Task[] {
-    return this.tasks;
+  constructor(private filtersService: FiltersService) {
+    this.filteredTasks$ = combineLatest([
+      this.tasks$,
+      this.filtersService.selectedDate$,
+      this.filtersService.checkboxStateChange$,
+      this.filtersService.statusChange$,
+    ]).pipe(
+      map(([tasks, selectedDate, checkboxState, status]) => {
+        return tasks.filter((task) => {
+          let matchesDate = true;
+          let matchesStatus = true;
+          let matchesCompletion = true;
+    
+          if (selectedDate) {
+            const formattedDate = formatDate(selectedDate, 'dd-MM-yyyy', 'en-US');
+            matchesDate = task.date === formattedDate;
+          }
+    
+          if (status && status !== 'All') {
+            matchesStatus = (status === 'Completed' && task.completed) ||
+                            (status === 'Pending' && !task.completed);
+          }
+    
+          if (checkboxState) {
+            matchesCompletion = task.completed === checkboxState;
+          }
+    
+          return matchesDate && matchesStatus && matchesCompletion;
+        });
+      })
+    );
   }
 
-  addTask(task: Task) {
-    this.tasks.push(task);
+  private updateTasks(tasks: Task[]): void {
+    this.tasksSubject.next(tasks);
+    this.saveTasksToLocalStorage(tasks);
   }
 
-  removeTask(id: number) {
-    this.tasks = this.tasks.filter((task) => task.id !== id);
+  private loadTasksFromLocalStorage(): Task[] {
+    const tasks = localStorage.getItem('tasks');
+    return tasks ? JSON.parse(tasks) : [];
   }
 
-  editTask(updatedTask: Task) {
-    const index = this.tasks.findIndex((task) => task.id === updatedTask.id);
-    if (index !== -1) {
-      this.tasks[index] = updatedTask;
-    }
+  private saveTasksToLocalStorage(tasks: Task[]): void {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
   }
 
-  completeTask(id: number) {
-    const task = this.tasks.find((task) => task.id === id);
-    if (task) {
-      task.completed = true;
-    }
+
+  getTasks(): Observable<Task[]> {
+    return this.tasks$;
   }
 
-  // Filtering tasks //
+  addTask(task: Task): void {
+    const currentTasks = this.tasksSubject.getValue();
+    this.updateTasks([...currentTasks, task]);
+  }
 
-  getTasksByDate(date: string): Task[] {
+  removeTask(id: number): void {
+    const updatedTasks = this.tasksSubject
+      .getValue()
+      .filter((task) => task.id !== id);
+    this.updateTasks(updatedTasks);
+  }
+
+  editTask(updatedTask: Task): void {
+    const tasks = this.tasksSubject
+      .getValue()
+      .map((task) => (task.id === updatedTask.id ? updatedTask : task));
+    this.updateTasks(tasks);
+  }
+
+  completeTask(id: number): void {
+    const tasks = this.tasksSubject
+      .getValue()
+      .map((task) => (task.id === id ? { ...task, completed: true } : task));
+    this.updateTasks(tasks);
+  }
+
+
+  getTasksByDate(date: string): Observable<Task[]> {
     const formattedDate = formatDate(date, 'dd-MM-yyyy', 'en-US');
-    return this.tasks.filter((task) => task.date === formattedDate);
+    return this.tasks$.pipe(
+      map((tasks) => tasks.filter((task) => task.date === formattedDate))
+    );
   }
 
-  getCompletedTasks(): Task[] {
-    return this.tasks.filter((task) => task.completed);
+
+  getCompletedTasks(): Observable<Task[]> {
+    return this.tasks$.pipe(
+      map((tasks) => tasks.filter((task) => task.completed))
+    );
   }
 
-  getPendingTasks(): Task[] {
-    return this.tasks.filter((task) => !task.completed);
+  getPendingTasks(): Observable<Task[]> {
+    return this.tasks$.pipe(
+      map((tasks) => tasks.filter((task) => !task.completed))
+    );
   }
 
-  // Search query //
-  getTasksBySearchQuery(query: string): Task[] {
-    return this.tasks.filter((task) => {
-      return (
-        task.title.toLowerCase().includes(query.toLowerCase()) ||
-        task.description.toLowerCase().includes(query.toLowerCase())
-      );
-    });
+
+  getTasksBySearchQuery(query: string): Observable<Task[]> {
+    const lowerQuery = query.toLowerCase();
+    return this.tasks$.pipe(
+      map((tasks) =>
+        tasks.filter(
+          (task) =>
+            task.title.toLowerCase().includes(lowerQuery) ||
+            task.description.toLowerCase().includes(lowerQuery)
+        )
+      )
+    );
   }
 }

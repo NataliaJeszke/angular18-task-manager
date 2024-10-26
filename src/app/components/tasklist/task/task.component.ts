@@ -24,6 +24,7 @@ export class TaskComponent {
   title = input.required<string>();
 
   @Output() taskDeleted = new EventEmitter<void>();
+  @Output() taskCompleted = new EventEmitter<void>();
 
   constructor(private taskService: TaskService) {}
 
@@ -38,7 +39,8 @@ export class TaskComponent {
 
   onComplete() {
     this.taskService.completeTask(this.id);
-    this.completed = true;
+    this.taskCompleted.emit();
+    console.log('Task completed', this.completed, this.id, this.title);
   }
 
   onSave(updatedTask: { title: string; description: string; date: string }) {

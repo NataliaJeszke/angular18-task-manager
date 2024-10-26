@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 import { Filter } from '../models/filter.model';
 import { FilterStatus } from '../utils/filter-status.enum';
@@ -15,13 +15,13 @@ export class FiltersService {
     statusChange: '',
   };
 
-  private selectedDate = new Subject<string>();
-  private checkboxStateChange = new Subject<boolean>();
-  private statusChange = new Subject<string>();
+  private selectedDateSubject = new BehaviorSubject<string | null>(null);
+  private checkboxStateSubject = new BehaviorSubject<boolean>(false);
+  private statusSubject = new BehaviorSubject<string>('');
 
-  checkboxStateChange$ = this.checkboxStateChange.asObservable();
-  selectedDate$ = this.selectedDate.asObservable();
-  statusChange$ = this.statusChange.asObservable();
+  selectedDate$ = this.selectedDateSubject.asObservable();
+  checkboxStateChange$ = this.checkboxStateSubject.asObservable();
+  statusChange$ = this.statusSubject.asObservable();
 
   getFilters(): string[] {
     return this.filterState.filters;
@@ -32,15 +32,15 @@ export class FiltersService {
     return String(today);
   }
 
-  setCheckboxChange(isChecked: boolean) {
-    this.checkboxStateChange.next(isChecked);
+  setCheckboxChange(isChecked: boolean): void {
+    this.checkboxStateSubject.next(isChecked);
   }
 
   setDateFilter(date: string): void {
-    this.selectedDate.next(date);
+    this.selectedDateSubject.next(date);
   }
 
   setStatusChange(status: string): void {
-    this.statusChange.next(status);
+    this.statusSubject.next(status);
   }
 }
