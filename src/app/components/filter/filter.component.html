@@ -1,18 +1,28 @@
 <div class="filter-container">
+  <div class="filter-header">
+    <span class="material-symbols-outlined"> filter_list </span>
+  <h3>Filters</h3>
+    <button class="clear-button" (click)="onClearFilters()">Clear</button>
+</div>
   <div class="filter-item today">
     <label for="todayFilter">Due date today</label>
-    <input class="checkbox" type="checkbox" id="todayFilter" (change)="onCheckboxChange($event)" />
+    <input class="checkbox" type="checkbox" id="todayFilter" [(ngModel)]="isChecked" (change)="onCheckboxChange($event)" />
   </div>
 
   <div class="filter-item">
     <label for="dateFilter">Due date</label>
-    <input type="date" id="dateFilter" (change)="onDateChange($event)" />
+    <input type="date" [(ngModel)]="selectedDate" id="dateFilter" (change)="onDateChange($event)" />
   </div>
 
   <div class="filter-item">
     <label for="statusFilter">Status</label>
-    <select (change)="onStatusChange($event)" id="statusFilter">
+    <select [(ngModel)]="selectedStatus" (change)="onStatusChange($event)" id="statusFilter">
       <option *ngFor="let filter of filters">{{ filter }}</option>
     </select>
   </div>
 </div>
+
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=filter_list"
+/>
