@@ -130,14 +130,4 @@ export class TaskService {
       )
     );
   }
-
-  // Search query //
-  getTasksBySearchQuery(query: string): Task[] {
-    return this.tasks.filter((task) => {
-      return (
-        task.title.toLowerCase().includes(query.toLowerCase()) ||
-        task.description.toLowerCase().includes(query.toLowerCase())
-      );
-    });
-  }
 }
