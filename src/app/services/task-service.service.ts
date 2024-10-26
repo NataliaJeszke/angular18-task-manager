@@ -97,37 +97,37 @@ export class TaskService {
   }
 
 
-  getTasksByDate(date: string): Observable<Task[]> {
-    const formattedDate = formatDate(date, 'dd-MM-yyyy', 'en-US');
-    return this.tasks$.pipe(
-      map((tasks) => tasks.filter((task) => task.date === formattedDate))
-    );
-  }
+  // getTasksByDate(date: string): Observable<Task[]> {
+  //   const formattedDate = formatDate(date, 'dd-MM-yyyy', 'en-US');
+  //   return this.tasks$.pipe(
+  //     map((tasks) => tasks.filter((task) => task.date === formattedDate))
+  //   );
+  // }
 
 
-  getCompletedTasks(): Observable<Task[]> {
-    return this.tasks$.pipe(
-      map((tasks) => tasks.filter((task) => task.completed))
-    );
-  }
+  // getCompletedTasks(): Observable<Task[]> {
+  //   return this.tasks$.pipe(
+  //     map((tasks) => tasks.filter((task) => task.completed))
+  //   );
+  // }
 
-  getPendingTasks(): Observable<Task[]> {
-    return this.tasks$.pipe(
-      map((tasks) => tasks.filter((task) => !task.completed))
-    );
-  }
+  // getPendingTasks(): Observable<Task[]> {
+  //   return this.tasks$.pipe(
+  //     map((tasks) => tasks.filter((task) => !task.completed))
+  //   );
+  // }
 
 
-  getTasksBySearchQuery(query: string): Observable<Task[]> {
-    const lowerQuery = query.toLowerCase();
-    return this.tasks$.pipe(
-      map((tasks) =>
-        tasks.filter(
-          (task) =>
-            task.title.toLowerCase().includes(lowerQuery) ||
-            task.description.toLowerCase().includes(lowerQuery)
-        )
-      )
-    );
-  }
+  // getTasksBySearchQuery(query: string): Observable<Task[]> {
+  //   const lowerQuery = query.toLowerCase();
+  //   return this.tasks$.pipe(
+  //     map((tasks) =>
+  //       tasks.filter(
+  //         (task) =>
+  //           task.title.toLowerCase().includes(lowerQuery) ||
+  //           task.description.toLowerCase().includes(lowerQuery)
+  //       )
+  //     )
+  //   );
+  // }
 }
