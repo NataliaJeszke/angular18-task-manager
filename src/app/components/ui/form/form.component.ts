@@ -6,7 +6,7 @@ import {
   OnChanges,
   SimpleChanges,
 } from '@angular/core';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { formatDate } from '@angular/common';
 import { TaskService } from '../../../services/task-service.service';
@@ -14,12 +14,13 @@ import { Task } from '../../../models/task.model';
 import { ButtonComponent } from '../button/button.component';
 
 import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CalendarModule } from 'primeng/calendar';
 
 @Component({
   selector: 'app-form',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, ButtonComponent, InputTextModule, CalendarModule],
+  imports: [ReactiveFormsModule, CommonModule, ButtonComponent, InputTextModule, CalendarModule, InputTextareaModule],
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.css'],
 })
@@ -47,9 +48,9 @@ export class FormComponent implements OnChanges {
 
   constructor(private taskService: TaskService, private fb: FormBuilder) {
     this.formGroup = this.fb.group({
-      title: ['', Validators.required],
-      description: ['', Validators.required],
-      date: ['', Validators.required],
+      title: [''],
+      description: [''],
+      date: [''],
     });
   }
 
