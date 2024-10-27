@@ -1,8 +1,11 @@
 import { Component, Input } from '@angular/core';
+import { ButtonModule } from 'primeng/button';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-button',
   standalone: true,
+  imports: [ButtonModule, CommonModule],
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.css'],
 })
@@ -10,23 +13,39 @@ export class ButtonComponent {
   @Input() label = 'Button';
   @Input() type: 'submit' | 'delete' | 'complete' | 'edit' = 'submit';
   @Input() isDisabled = false;
+  @Input() onClick?: () => void;
 
-  get buttonClasses(): string {
+  getButtonClass(): string {
     if (this.isDisabled && this.type === 'complete') {
-      return 'bg-gray-500 text-white font-bold py-2 px-4 rounded cursor-not-allowed';
+      return 'button-disabled';
     }
 
     switch (this.type) {
       case 'submit':
-        return 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded';
+        return 'button-submit';
       case 'delete':
-        return 'bg-[#e94e4e] hover:bg-[#c13c3c] text-white font-bold py-2 px-4 rounded';
+        return 'button-delete';
       case 'complete':
-        return 'bg-[#a8b7dd] hover:bg-[#6b85c4] text-white font-bold py-2 px-4 rounded';
+        return 'button-complete';
       case 'edit':
-        return 'border border-[#a8b7dd] bg-white text-[#a8b7dd] hover:bg-[#6b85c4] hover:text-white font-bold py-2 px-4 rounded';
+        return 'button-edit';
       default:
-        return 'bg-gray-500 text-white font-bold py-2 px-4 rounded';
+        return 'button-default';
+    }
+  }
+
+  getButtonIcon(): string {
+    switch (this.type) {
+      case 'submit':
+        return 'pi pi-plus';
+      case 'delete':
+        return 'pi pi-times';
+      case 'complete':
+        return 'pi pi-check';
+      case 'edit':
+        return 'pi pi-pencil';
+      default:
+        return '';
     }
   }
 }

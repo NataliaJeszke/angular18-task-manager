@@ -1,3 +1,8 @@
-<button [class]="buttonClasses">
-  {{ label }}
-</button>
+<p-button
+  [disabled]="isDisabled"
+  [type]="type"
+  [ngClass]="getButtonClass()"
+  [icon]="getButtonIcon()"
+>
+  <!-- {{ label }} -->
+</p-button>
