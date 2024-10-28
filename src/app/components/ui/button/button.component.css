@@ -1,6 +1,6 @@
 .button-submit {
     background-color: var(--primary-color);
-    color: var(--text-color); 
+    color: var(--primary-100);
     font-weight: bold;
     padding: 0.5rem 1rem;
     border-radius: var(--border-radius);
@@ -8,12 +8,12 @@
   }
   
   .button-submit:hover {
-    background-color: var(--primary-color-hover);
+    background-color: var(--primary-800);
   }
   
   .button-delete {
     background-color: var(--red-600);
-    color: var(--text-secondary-color);
+    color: var(--primary-100);
     font-weight: bold;
     padding: 0.5rem 1rem;
     border-radius: var(--border-radius);

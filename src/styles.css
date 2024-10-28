@@ -2,19 +2,36 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "primeicons/primeicons.css";
 
 /* src/styles.css */
 body {
-    margin: auto;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    overflow: auto;
-    background: linear-gradient(15deg, #a07ff5, #a293f3, #a8a5f2, #b7bcf2, #c8d1f3, #d7e1f4, #e6eef7, #f4f8fb);
-    background-size: 400% 400%;
-    background-attachment: fixed;
+  margin: auto;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow: auto;
+  background: linear-gradient(
+    15deg,
+    var(--primary-50),
+    var(--indigo-400),
+    var(--primary-200),
+    var(--primary-300),
+    var(--primary-600),
+    var(--primary-700),
+    var(--primary-700),
+    var(--primary-700)
+  );
+  background-size: 400% 400%;
+  background-attachment: fixed;
 }
 
 button.p-button:focus,
 button.p-button:focus-visible {
   outline: none !important;
   box-shadow: none !important;
+}
+
+.p-togglebutton.p-button{
+  border-radius: 50px;
+  width: 40px;
+  height: 40px;
 }
