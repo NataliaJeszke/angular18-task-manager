@@ -79,7 +79,14 @@ export class FormComponent implements OnChanges {
   }
 
   onSave() {
-    this.save.emit(this.formGroup.value);
+    if (this.formGroup.valid) {
+      const formattedDate = formatDate(this.formGroup.value.date, 'dd-MM-yyyy', 'en-US');
+      this.save.emit({
+        title: this.formGroup.value.title,
+        description: this.formGroup.value.description,
+        date: formattedDate,
+      });
+    }
   }
 
   resetTask() {
