@@ -1,36 +1,35 @@
 header {
-    background-color: #ffffff;
-    height: 3rem;
-    display: flex;
-    flex-direction: column;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
-    padding: 2rem;
-    color: #000000;
-    font-size: 1.5rem;
-    border-radius: 1px;
-    border: 1px solid rgba(255, 255, 255, 0.3); 
-    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.2); 
-    
+  background: var(--surface-a);
+  border: 1px solid var(--surface-border);
+  height: 3rem;
+  display: flex;
+  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem;
+  color: var(--text-color);
+  font-size: 1.5rem;
+  border-radius: 1px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.2);
 }
 .logo-container {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 
-    h1{
-        margin-left: -25px;
-        font-family: "Heebo", sans-serif;
-  font-size: 1.5rem;  /* Dopasuj rozmiar czcionki */
-  background: -webkit-linear-gradient(135deg,#3398DB, #8E43AD);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-weight: 800;
-    }
+  h1 {
+    margin-left: -25px;
+    font-family: "Heebo", sans-serif;
+    font-size: 1.5rem;
+    background: -webkit-linear-gradient(135deg, #3398db, #8e43ad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+  }
 }
 .logo {
-    width: 150px;
-    margin-bottom: 15px;
+  width: 150px;
+  margin-bottom: 15px;
 }

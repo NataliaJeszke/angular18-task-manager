@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { FiltersService } from '../../services/filters-service.service';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-filter',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ButtonModule],
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.css']
 })

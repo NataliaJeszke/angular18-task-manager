@@ -6,16 +6,21 @@ import {
   OnChanges,
   SimpleChanges,
 } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { formatDate } from '@angular/common';
 import { TaskService } from '../../../services/task-service.service';
 import { Task } from '../../../models/task.model';
 import { ButtonComponent } from '../button/button.component';
 
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { CalendarModule } from 'primeng/calendar';
+
 @Component({
   selector: 'app-form',
   standalone: true,
-  imports: [FormsModule, ButtonComponent],
+  imports: [ReactiveFormsModule, CommonModule, ButtonComponent, InputTextModule, CalendarModule, InputTextareaModule],
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.css'],
 })
@@ -31,8 +36,8 @@ export class FormComponent implements OnChanges {
     description: string;
     date: string;
   }>();
-  @Output() cancel = new EventEmitter<void>();
 
+  formGroup: FormGroup;
   task: Task = {
     title: '',
     description: '',
@@ -41,20 +46,31 @@ export class FormComponent implements OnChanges {
     id: 0,
   };
 
-  constructor(private taskService: TaskService) {}
+  constructor(private taskService: TaskService, private fb: FormBuilder) {
+    this.formGroup = this.fb.group({
+      title: [''],
+      description: [''],
+      date: [''],
+    });
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['title'] || changes['description'] || changes['date']) {
-      this.task.title = this.title;
-      this.task.description = this.description;
-      this.task.date = this.date;
+      this.formGroup.patchValue({
+        title: this.title,
+        description: this.description,
+        date: this.date,
+      });
     }
   }
 
   onSubmit() {
-    if (this.task.title) {
+    if (this.formGroup.valid) {
       this.task.id = Date.now() + Math.floor(Math.random() * 10000);
-      this.task.date = formatDate(this.task.date, 'dd-MM-yyyy', 'en-US');
+      this.task.date = formatDate(this.formGroup.value.date, 'dd-MM-yyyy', 'en-US');
+      this.task.title = this.formGroup.value.title;
+      this.task.description = this.formGroup.value.description;
+
       this.taskService.addTask(this.task);
       this.resetTask();
       this.taskAdded.emit();
@@ -63,14 +79,11 @@ export class FormComponent implements OnChanges {
   }
 
   onSave() {
-    this.save.emit({
-      title: this.task.title,
-      description: this.task.description,
-      date: formatDate(this.task.date, 'dd-MM-yyyy', 'en-US'),
-    });
+    this.save.emit(this.formGroup.value);
   }
 
   resetTask() {
+    this.formGroup.reset();
     this.task = {
       title: '',
       description: '',
