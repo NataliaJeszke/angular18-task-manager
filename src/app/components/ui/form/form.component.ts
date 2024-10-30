@@ -32,13 +32,6 @@ export class FormComponent implements OnChanges {
   @Input() completed!: boolean;
   @Input() newTask = false;
 
-  @Output() taskAdded = new EventEmitter<void>();
-  @Output() save = new EventEmitter<{
-    title: string;
-    description: string;
-    date: string;
-  }>();
-
   formGroup: FormGroup;
   task: Task = {
     title: '',
@@ -75,15 +68,13 @@ export class FormComponent implements OnChanges {
 
       this.taskService.addTask(this.task);
       this.resetTask();
-      this.taskAdded.emit();
       this.newTask = false;
     }
   }
 
   onSave() {
     if (this.formGroup.valid) {
-      const formattedDate = formatDate(this.formGroup.value.date, 'dd-MM-yyyy', 'en-US');
-      
+      const formattedDate = formatDate(this.formGroup.value.date, 'dd-MM-yyyy', 'en-US'); 
       const updatedTask: Task = {
         id: this.id,
         title: this.formGroup.value.title,
