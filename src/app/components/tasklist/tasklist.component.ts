@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import { ButtonComponent } from '../ui/button/button.component';
 import { FormComponent } from '../ui/form/form.component';
@@ -18,7 +18,8 @@ import { TaskService } from '../../services/task-service.service';
   styleUrls: ['./tasklist.component.css'],
 })
 export class TasklistComponent implements OnInit, OnDestroy {
-  tasks: Task[] = [];
+  tasks$: Observable<Task[]> | undefined;
+
   showForm = false;
   addingNewTask = false;
   searchQuery = '';
@@ -31,28 +32,8 @@ export class TasklistComponent implements OnInit, OnDestroy {
     this.addingNewTask = !this.addingNewTask;
   }
 
-  refreshTaskList() {
-    this.subscription = this.taskService.filteredTasks$.subscribe((tasks) => {
-      this.tasks = tasks;
-    });
-  }
-
-  onTaskDeleted() {
-    this.refreshTaskList();
-  }
-
-  onTaskCompleted() {
-    this.refreshTaskList();
-    console.log('Task completed, refreshed list:', this.tasks);
-  }
-
-  onTaskAdded() {
-    this.refreshTaskList();
-    this.toggleForm();
-  }
-
   ngOnInit() {
-    this.refreshTaskList();
+    this.tasks$ = this.taskService.refreshTaskList();
   }
 
   ngOnDestroy() {

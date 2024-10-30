@@ -1,4 +1,4 @@
-import { Component, Input, input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TaskService } from '../../../services/task-service.service';
 
@@ -17,14 +17,13 @@ export class TaskComponent {
 
   @Input({ required: false }) description = '';
   @Input() date = '';
-  @Input() id = 0;
-  @Input() completed = false;
+  @Input()
+  id!: number;
+  @Input()
+  completed!: boolean;
 
   // New Angular Signal //
   title = input.required<string>();
-
-  @Output() taskDeleted = new EventEmitter<void>();
-  @Output() taskCompleted = new EventEmitter<void>();
 
   constructor(private taskService: TaskService) {}
 
@@ -34,21 +33,9 @@ export class TaskComponent {
 
   onDelete() {
     this.taskService.removeTask(this.id);
-    this.taskDeleted.emit();
   }
 
   onComplete() {
     this.taskService.completeTask(this.id);
-    this.taskCompleted.emit();
-    console.log('Task completed', this.completed, this.id, this.title);
-  }
-
-  onSave(updatedTask: { title: string; description: string; date: string }) {
-    this.taskService.editTask({
-      id: this.id,
-      ...updatedTask,
-      completed: this.completed,
-    });
-    this.toggleForm();
   }
 }

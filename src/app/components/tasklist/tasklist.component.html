@@ -10,21 +10,19 @@
   <div *ngIf="showForm" class="modal-overlay">
     <div class="modal-content">
       <button class="close-button" (click)="toggleForm()">X</button>
-      <app-form [newTask]="addingNewTask" (taskAdded)="onTaskAdded()"></app-form>
+      <app-form [newTask]="addingNewTask"></app-form>
     </div>
   </div>
 
   <div class="task-list">
     <ul>
-      <li *ngFor="let task of tasks">
+      <li *ngFor="let task of tasks$ | async">
         <app-task
           [title]="task.title"
           [description]="task.description"
           [date]="task.date"
           [id]="task.id"
           [completed]="task.completed"
-          (taskDeleted)="onTaskDeleted()"
-          (taskCompleted)="onTaskCompleted()"
         ></app-task>
       </li>
     </ul>

@@ -70,9 +70,17 @@ export class TaskService {
     return this.tasks$;
   }
 
+  refreshTaskList(): Observable<Task[]>{
+    return this.filteredTasks$;
+  }
+
   addTask(task: Task): void {
     const currentTasks = this.tasksSubject.getValue();
     this.updateTasks([...currentTasks, task]);
+
+    if (currentTasks){
+      this.refreshTaskList();
+    }
   }
 
   removeTask(id: number): void {
@@ -80,13 +88,23 @@ export class TaskService {
       .getValue()
       .filter((task) => task.id !== id);
     this.updateTasks(updatedTasks);
+
+    if (updatedTasks){
+      this.refreshTaskList();
+    }
   }
 
   editTask(updatedTask: Task): void {
+    console.log('komponent otrzymal edycje');
+    console.log(updatedTask);
     const tasks = this.tasksSubject
       .getValue()
       .map((task) => (task.id === updatedTask.id ? updatedTask : task));
     this.updateTasks(tasks);
+
+    if (tasks){
+      this.refreshTaskList();
+    }
   }
 
   completeTask(id: number): void {
@@ -94,5 +112,9 @@ export class TaskService {
       .getValue()
       .map((task) => (task.id === id ? { ...task, completed: true } : task));
     this.updateTasks(tasks);
+
+    if (tasks){
+      this.refreshTaskList();
+    }
   }
 }
