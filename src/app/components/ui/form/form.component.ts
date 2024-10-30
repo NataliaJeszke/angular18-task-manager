@@ -1,7 +1,5 @@
 import {
   Component,
-  Output,
-  EventEmitter,
   Input,
   OnChanges,
   SimpleChanges,
@@ -59,6 +57,7 @@ export class FormComponent implements OnChanges {
     }
   }
 
+  // if new task, add task to task list
   onSubmit() {
     if (this.formGroup.valid) {
       this.task.id = Date.now() + Math.floor(Math.random() * 10000);
@@ -72,6 +71,7 @@ export class FormComponent implements OnChanges {
     }
   }
 
+  // if existing task, save changes
   onSave() {
     if (this.formGroup.valid) {
       const formattedDate = formatDate(this.formGroup.value.date, 'dd-MM-yyyy', 'en-US'); 

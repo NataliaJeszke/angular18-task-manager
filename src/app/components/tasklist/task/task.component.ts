@@ -17,10 +17,8 @@ export class TaskComponent {
 
   @Input({ required: false }) description = '';
   @Input() date = '';
-  @Input()
-  id!: number;
-  @Input()
-  completed!: boolean;
+  @Input() id!: number;
+  @Input() completed!: boolean;
 
   // New Angular Signal //
   title = input.required<string>();
