@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { formatDate } from '@angular/common';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
-import { Task } from '../models/task.model';
+import { TaskDto as Task } from '../generated-api/model/taskDto';
 
 import { FiltersService } from './filters-service.service';
 import { SearchService } from './search-service.service';
@@ -12,16 +13,17 @@ import { SearchService } from './search-service.service';
   providedIn: 'root',
 })
 export class TaskService {
-  private tasksSubject = new BehaviorSubject<Task[]>(
-    this.loadTasksFromLocalStorage()
-  );
+  private readonly apiUrl = 'http://localhost:3000/tasks';
+  private tasksSubject = new BehaviorSubject<Task[]>([]);
   tasks$ = this.tasksSubject.asObservable();
   filteredTasks$: Observable<Task[]>;
 
   constructor(
     private filtersService: FiltersService,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private http: HttpClient
   ) {
+    this.fetchTasks();
     this.filteredTasks$ = combineLatest([
       this.tasks$,
       this.filtersService.selectedDate$,
@@ -67,9 +69,10 @@ export class TaskService {
     this.saveTasksToLocalStorage(tasks);
   }
 
-  private loadTasksFromLocalStorage(): Task[] {
-    const tasks = localStorage.getItem('tasks');
-    return tasks ? JSON.parse(tasks) : [];
+  private fetchTasks(): void {
+    this.http.get<Task[]>(this.apiUrl).subscribe((tasks) => {
+      this.tasksSubject.next(tasks);
+    });
   }
 
   private saveTasksToLocalStorage(tasks: Task[]): void {
@@ -85,46 +88,36 @@ export class TaskService {
   }
 
   addTask(task: Task): void {
-    const currentTasks = this.tasksSubject.getValue();
-    this.updateTasks([...currentTasks, task]);
-
-    if (currentTasks) {
-      this.refreshTaskList();
-    }
+    this.http.post<Task>(this.apiUrl, task).subscribe((newTask) => {
+      const currentTasks = this.tasksSubject.getValue();
+      this.tasksSubject.next([...currentTasks, newTask]);
+    });
+    this.refreshTaskList();
   }
 
   removeTask(id: number): void {
-    const updatedTasks = this.tasksSubject
-      .getValue()
-      .filter((task) => task.id !== id);
-    this.updateTasks(updatedTasks);
-
-    if (updatedTasks) {
-      this.refreshTaskList();
-    }
+    this.http.delete<void>(`${this.apiUrl}/${id}`).subscribe(() => {
+      const updatedTasks = this.tasksSubject.getValue().filter((task) => task.id !== id);
+      this.tasksSubject.next(updatedTasks);
+    });
+    this.refreshTaskList();
   }
 
   editTask(updatedTask: Task): void {
-    console.log('komponent otrzymal edycje');
-    console.log(updatedTask);
-    const tasks = this.tasksSubject
-      .getValue()
-      .map((task) => (task.id === updatedTask.id ? updatedTask : task));
-    this.updateTasks(tasks);
-
-    if (tasks) {
-      this.refreshTaskList();
-    }
+    this.http.put<Task>(`${this.apiUrl}/${updatedTask.id}`, updatedTask).subscribe(() => {
+      const tasks = this.tasksSubject
+        .getValue()
+        .map((task) => (task.id === updatedTask.id ? updatedTask : task));
+      this.tasksSubject.next(tasks);
+    });
+    this.refreshTaskList();
   }
 
   completeTask(id: number): void {
-    const tasks = this.tasksSubject
-      .getValue()
-      .map((task) => (task.id === id ? { ...task, completed: true } : task));
-    this.updateTasks(tasks);
-
-    if (tasks) {
-      this.refreshTaskList();
+    const task = this.tasksSubject.getValue().find((t) => t.id === id);
+    if (task) {
+      const updatedTask = { ...task, completed: true };
+      this.editTask(updatedTask);
     }
   }
 }
