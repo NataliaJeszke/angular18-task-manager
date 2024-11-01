@@ -3,7 +3,7 @@ import { formatDate } from '@angular/common';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Task } from '../models/task.model';
+import { TaskDto as Task } from '../generated-api/model/taskDto';
 
 import { FiltersService } from './filters-service.service';
 import { SearchService } from './search-service.service';

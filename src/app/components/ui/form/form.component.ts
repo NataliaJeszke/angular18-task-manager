@@ -8,7 +8,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { formatDate } from '@angular/common';
 import { TaskService } from '../../../services/task-service.service';
-import { Task } from '../../../models/task.model';
+import { TaskDto as Task } from '../../../generated-api/model/taskDto';
 import { ButtonComponent } from '../button/button.component';
 
 import { InputTextModule } from 'primeng/inputtext';

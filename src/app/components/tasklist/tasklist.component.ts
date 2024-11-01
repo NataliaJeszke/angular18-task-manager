@@ -6,7 +6,7 @@ import { ButtonComponent } from '../ui/button/button.component';
 import { FormComponent } from '../ui/form/form.component';
 import { TaskComponent } from './task/task.component';
 
-import { Task } from '../../models/task.model';
+import { TaskDto as Task } from '../../generated-api/model/taskDto';
 
 import { TaskService } from '../../services/task-service.service';
 
