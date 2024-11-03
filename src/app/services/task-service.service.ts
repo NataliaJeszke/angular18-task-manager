@@ -64,19 +64,11 @@ export class TaskService {
     );
   }
 
-  private updateTasks(tasks: Task[]): void {
-    this.tasksSubject.next(tasks);
-    this.saveTasksToLocalStorage(tasks);
-  }
 
   private fetchTasks(): void {
     this.http.get<Task[]>(this.apiUrl).subscribe((tasks) => {
       this.tasksSubject.next(tasks);
     });
-  }
-
-  private saveTasksToLocalStorage(tasks: Task[]): void {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
   }
 
  refreshTaskList(): Observable<Task[]> {
